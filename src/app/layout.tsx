@@ -70,6 +70,11 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <meta name="theme-color" content="#FFFAF6" />
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6357521395673635"
+          crossOrigin="anonymous"
+        />
       </head>
       <body className={`${dmSans.variable} font-sans antialiased`}>
         {children}
