@@ -11,6 +11,38 @@ import { ConvertStats } from "./convert-stats";
 import { useConvertPipeline } from "@/hooks/use-convert";
 import { ACCEPTED_TYPES_EXTENDED } from "@/lib/constants";
 import { getExtension } from "@/lib/utils";
+import { ToolContent } from "@/components/shared/tool-content";
+
+const CONVERT_CONTENT = {
+  title: "Convert images online — free, private, no upload",
+  description:
+    "Convert between JPEG, PNG, WebP, and AVIF formats instantly in your browser. Our converter uses WebAssembly-powered codecs to decode and re-encode your images at the quality level you choose. See a real-time file size comparison so you can pick the optimal format. Your images are never uploaded to any server.",
+  steps: [
+    "Upload a JPEG, PNG, or WebP image by dragging it onto the upload area or clicking to browse. Files up to 50MB are supported.",
+    "Select your target output format — JPEG for broad compatibility, PNG for lossless quality, WebP for excellent size-quality balance, or AVIF for maximum compression.",
+    "For lossy formats (JPEG, WebP, AVIF), adjust the quality slider to control the size-quality trade-off. PNG is always lossless.",
+    "View the conversion results — including a file size comparison showing how much larger or smaller the converted file is compared to the original.",
+    "Download the converted image with one click. The file is generated entirely on your device.",
+  ],
+  faqs: [
+    {
+      q: "Which format produces the smallest file?",
+      a: "AVIF typically produces the smallest files, followed by WebP, then JPEG, then PNG. AVIF can be 30-50% smaller than JPEG at equivalent visual quality. However, AVIF has less browser support than WebP.",
+    },
+    {
+      q: "When should I use PNG instead of JPEG?",
+      a: "Use PNG for images that need transparency, screenshots, diagrams, text-heavy images, or anything that requires pixel-perfect quality. Use JPEG for photographs where small compression artifacts are acceptable.",
+    },
+    {
+      q: "What is WebP and why should I use it?",
+      a: "WebP is a modern image format developed by Google. It provides 25-34% better compression than JPEG at equivalent quality, supports both lossy and lossless compression, and supports transparency. It is supported by all modern browsers.",
+    },
+    {
+      q: "Is AVIF supported by all browsers?",
+      a: "AVIF is supported by Chrome, Firefox, and Safari (from version 16.4). Edge and Opera also support it. For maximum compatibility, WebP or JPEG are safer choices.",
+    },
+  ],
+};
 
 export function ConvertView() {
   const { state, dispatch, upload, reset } = useConvertPipeline();
@@ -36,6 +68,7 @@ export function ConvertView() {
             />
           </div>
           {error && <p className="text-sm text-red-600">{error}</p>}
+          <ToolContent {...CONVERT_CONTENT} />
         </div>
       </ToolLayout>
     );

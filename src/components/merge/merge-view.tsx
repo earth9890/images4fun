@@ -12,6 +12,38 @@ import { MergePreview } from "./merge-preview";
 import { useMergePipeline } from "@/hooks/use-merge";
 import { ACCEPTED_TYPES, MAX_MERGE_IMAGES } from "@/lib/constants";
 import { formatBytes } from "@/lib/utils";
+import { ToolContent } from "@/components/shared/tool-content";
+
+const MERGE_CONTENT = {
+  title: "Merge images online — free, private, no upload",
+  description:
+    "Combine multiple images into a single file with our browser-based merge tool. Choose horizontal, vertical, or grid layouts. Adjust spacing, background color, and drag to reorder. Supports up to 10 images at once. Your files never leave your device.",
+  steps: [
+    "Upload 2 or more images (up to 10) by dragging them onto the upload area or clicking to browse. JPEG and PNG formats are accepted.",
+    "Drag and drop to reorder your images in the list. The order in the list matches the order in the merged output.",
+    "Choose your layout — horizontal places images side by side, vertical stacks them, and grid arranges them in rows and columns.",
+    "Adjust the gap between images (0-50 pixels) and pick a background color for the space between and around images.",
+    "Click Merge to generate the combined image, then download the result as a PNG file.",
+  ],
+  faqs: [
+    {
+      q: "How many images can I merge at once?",
+      a: "You can combine up to 10 images in a single merge. This limit ensures smooth performance across all devices.",
+    },
+    {
+      q: "Can I control the order of images?",
+      a: "Yes — drag and drop the image thumbnails in the list to rearrange them. The merge output follows the same order as the list.",
+    },
+    {
+      q: "What layout options are available?",
+      a: "Three layouts: Horizontal (side by side), Vertical (stacked top to bottom), and Grid (automatic rows and columns based on image count).",
+    },
+    {
+      q: "Can I set a transparent background?",
+      a: "Yes — select the transparent option in the background color picker. The output PNG will preserve transparency in the gaps between images.",
+    },
+  ],
+};
 
 export function MergeView() {
   const { state, dispatch, addImages, removeImage, reorderImages, merge, reset } =
@@ -40,6 +72,7 @@ export function MergeView() {
             />
           </div>
           {error && <p className="text-sm text-red-600">{error}</p>}
+          <ToolContent {...MERGE_CONTENT} />
         </div>
       </ToolLayout>
     );

@@ -13,19 +13,16 @@ export function Footer({ onNavigate }: FooterProps) {
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
           <div className="sm:col-span-2 lg:col-span-1">
-            <button
-              onClick={() => onNavigate("#/")}
-              className="flex items-center gap-2 group"
-            >
+            <a href="/" className="flex items-center gap-2 group">
               <span className="flex h-7 w-7 items-center justify-center rounded-[6px] bg-[var(--color-brand)] text-white text-xs font-semibold">
                 i4
               </span>
               <span className="text-base font-semibold tracking-tight">
                 images4.fun
               </span>
-            </button>
+            </a>
             <p className="mt-4 text-sm leading-relaxed text-white/50">
-              Free, private, browser-based image tools. No uploads, no accounts, no limits.
+              Free, private, browser-based image tools powered by WebAssembly. No uploads, no accounts, no limits. Your images never leave your device.
             </p>
           </div>
 
@@ -37,12 +34,16 @@ export function Footer({ onNavigate }: FooterProps) {
             <ul className="flex flex-col gap-2.5">
               {TOOLS.map((tool) => (
                 <li key={tool.id}>
-                  <button
-                    onClick={() => onNavigate(tool.route)}
+                  <a
+                    href={`/${tool.route}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      onNavigate(tool.route);
+                    }}
                     className="text-sm text-white/60 hover:text-white transition-colors"
                   >
                     {tool.name} Image
-                  </button>
+                  </a>
                 </li>
               ))}
             </ul>
@@ -60,12 +61,16 @@ export function Footer({ onNavigate }: FooterProps) {
                 { label: "Terms of Service", route: "#/terms" },
               ].map((link) => (
                 <li key={link.route}>
-                  <button
-                    onClick={() => onNavigate(link.route)}
+                  <a
+                    href={`/${link.route}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      onNavigate(link.route);
+                    }}
                     className="text-sm text-white/60 hover:text-white transition-colors"
                   >
                     {link.label}
-                  </button>
+                  </a>
                 </li>
               ))}
             </ul>

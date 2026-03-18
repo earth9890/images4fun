@@ -12,6 +12,38 @@ import { Spinner } from "@/components/ui/spinner";
 import { ToolLayout } from "@/components/layout/tool-layout";
 import { useCompressionPipeline } from "@/hooks/use-compression";
 import { ACCEPTED_TYPES } from "@/lib/constants";
+import { ToolContent } from "@/components/shared/tool-content";
+
+const COMPRESS_CONTENT = {
+  title: "Compress images online — free, private, no upload",
+  description:
+    "Reduce the file size of your JPEG and PNG images without losing visible quality. Our image compressor runs entirely in your browser using WebAssembly-powered codecs. Your photos are never uploaded to any server — processing is instant and completely private.",
+  steps: [
+    "Drag and drop your image onto the upload area, or click to browse your files. We accept JPEG and PNG images up to 50MB.",
+    "Choose your output format (JPEG, WebP, or AVIF) and adjust the quality slider. Lower quality means smaller files, but the visual difference is often imperceptible above 60%.",
+    "Optionally enable resizing to set maximum width and height dimensions. The aspect ratio is always preserved.",
+    "View the compression results — file size reduction, dimensions, and processing time. Use the Compare tab to see a side-by-side before-and-after view.",
+    "Download your compressed image with one click. No watermarks, no sign-up required.",
+  ],
+  faqs: [
+    {
+      q: "Which format should I choose for the smallest file size?",
+      a: "AVIF generally produces the smallest files at equivalent quality, followed by WebP, then JPEG. However, AVIF encoding is slower and not supported by all browsers yet. WebP is a great balance of size and compatibility.",
+    },
+    {
+      q: "Will compressing my image reduce its quality?",
+      a: "At quality levels above 70%, the visual difference is usually imperceptible to the human eye. You can use the Compare feature to see a pixel-level before-and-after comparison.",
+    },
+    {
+      q: "What happens to my original image?",
+      a: "Nothing — your original file is never modified. The compressed version is generated as a new file. Your original stays exactly as it was on your device.",
+    },
+    {
+      q: "Can I compress multiple images at once?",
+      a: "Currently, the compressor processes one image at a time. This allows you to fine-tune quality settings for each image individually.",
+    },
+  ],
+};
 
 interface CompressViewProps {
   showCompare: boolean;
@@ -50,6 +82,7 @@ export function CompressView({ showCompare }: CompressViewProps) {
           {error && (
             <p className="text-sm text-red-600">{error}</p>
           )}
+          <ToolContent {...COMPRESS_CONTENT} />
         </div>
       </ToolLayout>
     );

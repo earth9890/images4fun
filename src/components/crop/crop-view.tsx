@@ -11,7 +11,39 @@ import { CropControls } from "./crop-controls";
 import { useCropPipeline } from "@/hooks/use-crop";
 import { ACCEPTED_TYPES } from "@/lib/constants";
 import { formatBytes, getExtension } from "@/lib/utils";
+import { ToolContent } from "@/components/shared/tool-content";
 import type { AspectRatio } from "@/lib/types";
+
+const CROP_CONTENT = {
+  title: "Crop images online — free, private, no upload",
+  description:
+    "Trim your images to the exact dimensions you need with our interactive crop tool. Drag the handles to select your crop area, choose preset aspect ratios like 1:1 for social media or 16:9 for presentations, and export as PNG or JPEG. Everything runs in your browser — your images are never uploaded.",
+  steps: [
+    "Upload a JPEG or PNG image by dragging it onto the upload area or clicking to browse your files.",
+    "Drag the crop handles on the interactive canvas to select the area you want to keep. The overlay shows the area that will be trimmed.",
+    "Choose a preset aspect ratio (1:1, 4:3, 3:2, 16:9) or use freeform mode for custom dimensions.",
+    "Select your output format — PNG for lossless quality or JPEG for smaller files. Adjust JPEG quality with the slider.",
+    "Click Apply crop to generate your cropped image, then download the result instantly.",
+  ],
+  faqs: [
+    {
+      q: "Can I crop to exact pixel dimensions?",
+      a: "Yes — the crop dimensions are displayed in real-time as you drag the handles. You can precisely select the exact area you need down to the pixel.",
+    },
+    {
+      q: "Which aspect ratio should I use for social media?",
+      a: "Use 1:1 (square) for Instagram posts and profile pictures. Use 16:9 for YouTube thumbnails, Twitter headers, and LinkedIn banners. Use 4:3 for Facebook shared images.",
+    },
+    {
+      q: "Does cropping reduce image quality?",
+      a: "If you export as PNG, there is zero quality loss — it is lossless. For JPEG, you can control the quality level with the slider. Set it to 95-100 for virtually no visible difference.",
+    },
+    {
+      q: "What is the maximum image size I can crop?",
+      a: "You can upload images up to 50MB and 8192 pixels in either dimension. Processing happens on your device, so performance depends on your hardware.",
+    },
+  ],
+};
 
 export function CropView() {
   const { state, dispatch, upload, updateCropRegion, applyCrop, reset } = useCropPipeline();
@@ -62,6 +94,7 @@ export function CropView() {
             <Dropzone onFiles={handleFiles} acceptedTypes={ACCEPTED_TYPES} />
           </div>
           {error && <p className="text-sm text-red-600">{error}</p>}
+          <ToolContent {...CROP_CONTENT} />
         </div>
       </ToolLayout>
     );

@@ -32,16 +32,23 @@ interface MobileNavProps {
 
 export function MobileNav({ currentRoute, onNavigate }: MobileNavProps) {
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 flex items-center justify-around border-t border-[var(--color-edge)] bg-white/95 backdrop-blur-md px-2 py-2 lg:hidden">
+    <nav
+      className="fixed bottom-0 left-0 right-0 z-50 flex items-center justify-around border-t border-[var(--color-edge)] bg-white/95 backdrop-blur-md px-2 py-2 lg:hidden"
+      aria-label="Mobile tool navigation"
+    >
       {TOOLS.map((tool) => {
         const icon = iconMap[tool.icon];
         const isActive = currentRoute.startsWith(tool.route);
         const color = toolColorMap[tool.id];
 
         return (
-          <button
+          <a
             key={tool.id}
-            onClick={() => onNavigate(tool.route)}
+            href={`/${tool.route}`}
+            onClick={(e) => {
+              e.preventDefault();
+              onNavigate(tool.route);
+            }}
             className={clsx(
               "flex flex-col items-center gap-1 rounded-lg px-3 py-1.5 transition-colors",
               isActive
@@ -52,7 +59,7 @@ export function MobileNav({ currentRoute, onNavigate }: MobileNavProps) {
           >
             {icon && <Icon icon={icon} size={20} />}
             <span className="text-[10px]">{tool.name}</span>
-          </button>
+          </a>
         );
       })}
     </nav>

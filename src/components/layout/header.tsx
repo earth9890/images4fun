@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { clsx } from "clsx";
 import {
   FileMinusIcon,
@@ -43,40 +43,33 @@ export function Header({ currentRoute, onNavigate }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const isCompress = currentRoute.startsWith("#/compress");
 
-  const navigate = useCallback(
-    (hash: string) => {
-      onNavigate(hash);
-      setMobileMenuOpen(false);
-    },
-    [onNavigate]
-  );
-
   return (
     <header className="sticky top-0 z-50 border-b border-[var(--color-edge)] bg-white/95 backdrop-blur-md">
       <div className="mx-auto flex h-[60px] max-w-6xl items-center justify-between px-4 lg:px-6">
         {/* Logo */}
-        <button
-          onClick={() => navigate("#/")}
-          className="flex items-center gap-2 group"
-        >
+        <a href="/" className="flex items-center gap-2 group">
           <span className="flex h-8 w-8 items-center justify-center rounded-[8px] bg-[var(--color-brand)] text-white text-sm font-semibold shadow-sm transition-transform duration-200 group-hover:scale-105">
             i4
           </span>
           <span className="text-base font-semibold text-[var(--color-ink)] tracking-tight">
             images4.fun
           </span>
-        </button>
+        </a>
 
         {/* Desktop tool nav */}
-        <nav className="hidden items-center gap-1 md:flex">
+        <nav className="hidden items-center gap-1 md:flex" aria-label="Main tools">
           {TOOLS.map((tool) => {
             const icon = iconMap[tool.icon];
             const isActive = currentRoute.startsWith(tool.route);
             const color = toolColorMap[tool.id];
             return (
-              <button
+              <a
                 key={tool.id}
-                onClick={() => navigate(tool.route)}
+                href={`/${tool.route}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  onNavigate(tool.route);
+                }}
                 className={clsx(
                   "flex items-center gap-1.5 rounded-[9px] px-3.5 py-2 text-sm transition-all duration-200",
                   isActive
@@ -87,7 +80,7 @@ export function Header({ currentRoute, onNavigate }: HeaderProps) {
               >
                 {icon && <Icon icon={icon} size={16} />}
                 {tool.name}
-              </button>
+              </a>
             );
           })}
         </nav>
@@ -96,6 +89,7 @@ export function Header({ currentRoute, onNavigate }: HeaderProps) {
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           className="flex items-center justify-center rounded-[9px] p-2 text-[var(--color-ink-muted)] hover:bg-[var(--color-surface-sunken)] md:hidden"
+          aria-label="Toggle menu"
         >
           <Icon icon={mobileMenuOpen ? Cancel01Icon : Menu01Icon} size={22} />
         </button>
@@ -116,16 +110,21 @@ export function Header({ currentRoute, onNavigate }: HeaderProps) {
 
       {/* Mobile dropdown */}
       {mobileMenuOpen && (
-        <div className="border-t border-[var(--color-edge)] bg-white md:hidden animate-slide-up">
+        <nav className="border-t border-[var(--color-edge)] bg-white md:hidden animate-slide-up" aria-label="Mobile navigation">
           <div className="flex flex-col p-3 gap-1">
             {TOOLS.map((tool) => {
               const icon = iconMap[tool.icon];
               const isActive = currentRoute.startsWith(tool.route);
               const color = toolColorMap[tool.id];
               return (
-                <button
+                <a
                   key={tool.id}
-                  onClick={() => navigate(tool.route)}
+                  href={`/${tool.route}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onNavigate(tool.route);
+                    setMobileMenuOpen(false);
+                  }}
                   className={clsx(
                     "flex items-center gap-2.5 rounded-[9px] px-4 py-3 text-sm transition-all duration-200",
                     isActive
@@ -136,18 +135,23 @@ export function Header({ currentRoute, onNavigate }: HeaderProps) {
                 >
                   {icon && <Icon icon={icon} size={18} />}
                   {tool.name}
-                </button>
+                </a>
               );
             })}
             <div className="my-2 border-t border-[var(--color-edge)]" />
-            <button
-              onClick={() => navigate("#/about")}
+            <a
+              href="/#/about"
+              onClick={(e) => {
+                e.preventDefault();
+                onNavigate("#/about");
+                setMobileMenuOpen(false);
+              }}
               className="rounded-[9px] px-4 py-2.5 text-left text-sm text-[var(--color-ink-muted)] hover:bg-[var(--color-surface-sunken)]"
             >
               About
-            </button>
+            </a>
           </div>
-        </div>
+        </nav>
       )}
     </header>
   );
