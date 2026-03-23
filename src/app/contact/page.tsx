@@ -7,6 +7,24 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/contact",
   },
+  openGraph: {
+    type: "website",
+    title: "Contact — images4.fun",
+    description:
+      "Get in touch with the images4.fun team. Questions, feedback, or partnership inquiries.",
+    url: "https://images4.fun/contact",
+    siteName: "images4.fun",
+  },
+  twitter: {
+    card: "summary",
+    title: "Contact — images4.fun",
+    description:
+      "Get in touch with the images4.fun team. Questions, feedback, or partnership inquiries.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function ContactPage() {

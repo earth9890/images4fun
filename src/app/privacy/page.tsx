@@ -8,6 +8,24 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/privacy",
   },
+  openGraph: {
+    type: "website",
+    title: "Privacy Policy — images4.fun",
+    description:
+      "All image processing happens in your browser. We never upload, store, or access your images.",
+    url: "https://images4.fun/privacy",
+    siteName: "images4.fun",
+  },
+  twitter: {
+    card: "summary",
+    title: "Privacy Policy — images4.fun",
+    description:
+      "All image processing happens in your browser. We never upload, store, or access your images.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function PrivacyPage() {
