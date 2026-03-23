@@ -1,12 +1,8 @@
 "use client";
 
-import { TOOLS } from "@/lib/constants";
+import { TOOLS, ROUTES } from "@/lib/constants";
 
-interface FooterProps {
-  onNavigate: (hash: string) => void;
-}
-
-export function Footer({ onNavigate }: FooterProps) {
+export function Footer() {
   return (
     <footer className="bg-[var(--color-surface-dark)] text-[var(--color-ink-on-dark)]">
       <div className="mx-auto max-w-6xl px-4 py-14 lg:px-6">
@@ -35,11 +31,7 @@ export function Footer({ onNavigate }: FooterProps) {
               {TOOLS.map((tool) => (
                 <li key={tool.id}>
                   <a
-                    href={`/${tool.route}`}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      onNavigate(tool.route);
-                    }}
+                    href={tool.route}
                     className="text-sm text-white/60 hover:text-white transition-colors"
                   >
                     {tool.name} Image
@@ -56,17 +48,14 @@ export function Footer({ onNavigate }: FooterProps) {
             </p>
             <ul className="flex flex-col gap-2.5">
               {[
-                { label: "About Us", route: "#/about" },
-                { label: "Privacy Policy", route: "#/privacy" },
-                { label: "Terms of Service", route: "#/terms" },
+                { label: "About Us", route: ROUTES.ABOUT },
+                { label: "Privacy Policy", route: ROUTES.PRIVACY },
+                { label: "Terms of Service", route: ROUTES.TERMS },
+                { label: "Contact", route: ROUTES.CONTACT },
               ].map((link) => (
                 <li key={link.route}>
                   <a
-                    href={`/${link.route}`}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      onNavigate(link.route);
-                    }}
+                    href={link.route}
                     className="text-sm text-white/60 hover:text-white transition-colors"
                   >
                     {link.label}

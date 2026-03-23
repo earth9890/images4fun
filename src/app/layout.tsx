@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
+import { ClientLayout } from "@/components/layout/client-layout";
 import "./globals.css";
 
 const dmSans = DM_Sans({
@@ -68,7 +69,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link rel="icon" href="/favicon.ico" sizes="32x32" />
         <meta name="theme-color" content="#FFFAF6" />
         <script
           async
@@ -77,7 +79,7 @@ export default function RootLayout({
         />
       </head>
       <body className={`${dmSans.variable} font-sans antialiased`}>
-        {children}
+        <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
   );

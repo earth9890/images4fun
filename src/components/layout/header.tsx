@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { clsx } from "clsx";
 import {
   FileMinusIcon,
@@ -11,7 +11,7 @@ import {
   Cancel01Icon,
 } from "@hugeicons/core-free-icons";
 import { Icon } from "@/components/ui/icon";
-import { TOOLS } from "@/lib/constants";
+import { TOOLS, ROUTES } from "@/lib/constants";
 import { Tabs } from "@/components/ui/tabs";
 import type { IconSvgElement } from "@hugeicons/react";
 
@@ -31,17 +31,35 @@ const toolColorMap: Record<string, string> = {
 
 interface HeaderProps {
   currentRoute: string;
-  onNavigate: (hash: string) => void;
 }
 
 const COMPRESS_TABS = [
-  { value: "#/compress", label: "Compress" },
-  { value: "#/compress/compare", label: "Compare" },
+  { value: ROUTES.COMPRESS, label: "Compress" },
+  { value: ROUTES.COMPARE, label: "Compare" },
 ];
 
-export function Header({ currentRoute, onNavigate }: HeaderProps) {
+export function Header({ currentRoute }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const isCompress = currentRoute.startsWith("#/compress");
+  const [activeTab, setActiveTab] = useState(currentRoute);
+  const isCompress = currentRoute.startsWith("/compress");
+
+  useEffect(() => {
+    setActiveTab(currentRoute);
+  }, [currentRoute]);
+
+  useEffect(() => {
+    const handlePopState = () => {
+      setActiveTab(window.location.pathname);
+    };
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, []);
+
+  const handleTabChange = useCallback((value: string) => {
+    setActiveTab(value);
+    window.history.pushState({}, "", value);
+    window.dispatchEvent(new PopStateEvent("popstate"));
+  }, []);
 
   return (
     <header className="sticky top-0 z-50 border-b border-[var(--color-edge)] bg-white/95 backdrop-blur-md">
@@ -65,11 +83,7 @@ export function Header({ currentRoute, onNavigate }: HeaderProps) {
             return (
               <a
                 key={tool.id}
-                href={`/${tool.route}`}
-                onClick={(e) => {
-                  e.preventDefault();
-                  onNavigate(tool.route);
-                }}
+                href={tool.route}
                 className={clsx(
                   "flex items-center gap-1.5 rounded-[9px] px-3.5 py-2 text-sm transition-all duration-200",
                   isActive
@@ -101,8 +115,8 @@ export function Header({ currentRoute, onNavigate }: HeaderProps) {
           <div className="mx-auto max-w-6xl px-4 py-2 lg:px-6">
             <Tabs
               tabs={COMPRESS_TABS}
-              value={currentRoute === "#/compress/compare" ? "#/compress/compare" : "#/compress"}
-              onChange={onNavigate}
+              value={activeTab === ROUTES.COMPARE ? ROUTES.COMPARE : ROUTES.COMPRESS}
+              onChange={handleTabChange}
             />
           </div>
         </div>
@@ -119,12 +133,8 @@ export function Header({ currentRoute, onNavigate }: HeaderProps) {
               return (
                 <a
                   key={tool.id}
-                  href={`/${tool.route}`}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    onNavigate(tool.route);
-                    setMobileMenuOpen(false);
-                  }}
+                  href={tool.route}
+                  onClick={() => setMobileMenuOpen(false)}
                   className={clsx(
                     "flex items-center gap-2.5 rounded-[9px] px-4 py-3 text-sm transition-all duration-200",
                     isActive
@@ -140,12 +150,8 @@ export function Header({ currentRoute, onNavigate }: HeaderProps) {
             })}
             <div className="my-2 border-t border-[var(--color-edge)]" />
             <a
-              href="/#/about"
-              onClick={(e) => {
-                e.preventDefault();
-                onNavigate("#/about");
-                setMobileMenuOpen(false);
-              }}
+              href="/about"
+              onClick={() => setMobileMenuOpen(false)}
               className="rounded-[9px] px-4 py-2.5 text-left text-sm text-[var(--color-ink-muted)] hover:bg-[var(--color-surface-sunken)]"
             >
               About

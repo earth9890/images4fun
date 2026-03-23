@@ -27,10 +27,9 @@ const toolColorMap: Record<string, string> = {
 
 interface SidebarProps {
   currentRoute: string;
-  onNavigate: (hash: string) => void;
 }
 
-export function Sidebar({ currentRoute, onNavigate }: SidebarProps) {
+export function Sidebar({ currentRoute }: SidebarProps) {
   return (
     <aside className="hidden w-48 shrink-0 border-r border-[var(--color-edge)] bg-[var(--color-surface-raised)] p-4 lg:block">
       <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-[var(--color-ink-faint)]">
@@ -42,9 +41,9 @@ export function Sidebar({ currentRoute, onNavigate }: SidebarProps) {
           const icon = iconMap[tool.icon];
           const color = toolColorMap[tool.id];
           return (
-            <button
+            <a
               key={tool.id}
-              onClick={() => onNavigate(tool.route)}
+              href={tool.route}
               className={clsx(
                 "flex items-center gap-2.5 rounded-[8px] px-3 py-2 text-left text-sm transition-all duration-150",
                 isActive
@@ -55,7 +54,7 @@ export function Sidebar({ currentRoute, onNavigate }: SidebarProps) {
             >
               {icon && <Icon icon={icon} size={16} />}
               {tool.name}
-            </button>
+            </a>
           );
         })}
       </nav>

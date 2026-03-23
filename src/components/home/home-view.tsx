@@ -30,10 +30,6 @@ const toolColorMap: Record<string, { bg: string; light: string }> = {
   convert: { bg: "var(--color-tool-convert)", light: "var(--color-tool-convert-light)" },
 };
 
-interface HomeViewProps {
-  onNavigate: (hash: string) => void;
-}
-
 const FEATURES = [
   {
     icon: ShieldKeyIcon,
@@ -80,7 +76,7 @@ const TOOL_DETAILS: Record<string, { tagline: string; bullets: string[]; howItWo
   },
 };
 
-export function HomeView({ onNavigate }: HomeViewProps) {
+export function HomeView() {
   return (
     <main className="flex-1">
       {/* Hero */}
@@ -104,11 +100,7 @@ export function HomeView({ onNavigate }: HomeViewProps) {
             return (
               <a
                 key={tool.id}
-                href={`/${tool.route}`}
-                onClick={(e) => {
-                  e.preventDefault();
-                  onNavigate(tool.route);
-                }}
+                href={tool.route}
                 className={clsx(
                   "group flex flex-col items-start gap-4 rounded-[14px] border border-[var(--color-edge)] bg-[var(--color-surface-raised)] p-6 text-left",
                   "transition-all duration-200 hover:scale-[1.02] hover:shadow-lg hover:border-[var(--color-edge-strong)]",
@@ -171,11 +163,7 @@ export function HomeView({ onNavigate }: HomeViewProps) {
                 </ul>
                 <p className="text-xs leading-relaxed text-[var(--color-ink-faint)] mb-4">{details.howItWorks}</p>
                 <a
-                  href={`/${tool.route}`}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    onNavigate(tool.route);
-                  }}
+                  href={tool.route}
                   className="inline-block rounded-[8px] px-4 py-2 text-sm font-semibold text-white transition-all duration-200 hover:opacity-90"
                   style={{ backgroundColor: colors.bg }}
                 >
@@ -298,11 +286,7 @@ export function HomeView({ onNavigate }: HomeViewProps) {
               return (
                 <a
                   key={tool.id}
-                  href={`/${tool.route}`}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    onNavigate(tool.route);
-                  }}
+                  href={tool.route}
                   className="rounded-[10px] px-5 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:opacity-90 hover:scale-105"
                   style={{ backgroundColor: colors.bg }}
                 >

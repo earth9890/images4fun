@@ -1,15 +1,16 @@
 import type { AspectRatio, CompressionSettings, Tool } from "./types";
 
 export const ROUTES = {
-  HOME: "",
-  COMPRESS: "#/compress",
-  COMPARE: "#/compress/compare",
-  MERGE: "#/merge",
-  CROP: "#/crop",
-  CONVERT: "#/convert",
-  ABOUT: "#/about",
-  PRIVACY: "#/privacy",
-  TERMS: "#/terms",
+  HOME: "/",
+  COMPRESS: "/compress",
+  COMPARE: "/compress/compare",
+  MERGE: "/merge",
+  CROP: "/crop",
+  CONVERT: "/convert",
+  ABOUT: "/about",
+  PRIVACY: "/privacy",
+  TERMS: "/terms",
+  CONTACT: "/contact",
 } as const;
 
 export const TOOLS: Tool[] = [
